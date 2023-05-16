@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ResizeAndCrop.cpp">
+    <ClCompile Include="ShapesAndText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
