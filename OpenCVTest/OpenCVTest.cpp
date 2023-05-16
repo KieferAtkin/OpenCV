@@ -7,7 +7,7 @@ using namespace cv;
 using namespace std;
 
 
-/////////////////  Images  //////////////////////
+/////////////////  Images - Basic Functions  //////////////////////
 
 void main() {
 

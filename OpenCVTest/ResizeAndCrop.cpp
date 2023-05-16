@@ -7,28 +7,23 @@ using namespace cv;
 using namespace std;
 
 
-/////////////////  Images  //////////////////////
+/////////////////  Image Resize and Crop //////////////////////
 
 void main() 
 {
+	string sourcePath = "Resources/TestImage.png";
+	Mat imageSource = imread(sourcePath);
+	Mat imageResized, imageCropped;
 
-	string path = "Resources/TestImage.png";
-	Mat img = imread(path);
-	Mat imgGray, imgBlur, imgCanny, imgDil, imgErode;
+	// cout << imageSource.size() << endl;
+	resize(imageSource, imageResized, Size(), 0.5,0.5);
+	
+	Rect regionOfInterest(100,100,350,250);
+	imageCropped = imageSource(regionOfInterest);
 
-	cvtColor(img, imgGray, COLOR_BGR2GRAY);
-	GaussianBlur(imgGray, imgBlur, Size(7, 7), 5, 0);
-	Canny(imgBlur, imgCanny, 25, 75);
-
-	Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3));
-	dilate(imgCanny, imgDil, kernel);
-	erode(imgDil, imgErode, kernel);
-
-	imshow("Image", img);
-	imshow("Image Gray", imgGray);
-	imshow("Image Blur", imgBlur);
-	imshow("Image Canny", imgCanny);
-	imshow("Image Dilation", imgDil);
-	imshow("Image Erode", imgErode);
+	imshow("Image", imageSource);
+	imshow("Image Resized", imageResized);
+	imshow("Imaged Cropped", imageCropped);
+	
 	waitKey(0);
 }
