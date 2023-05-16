@@ -9,21 +9,21 @@ using namespace std;
 
 /////////////////  Image Resize and Crop //////////////////////
 
-void main() 
+void main()
 {
 	string sourcePath = "Resources/TestImage.png";
 	Mat imageSource = imread(sourcePath);
 	Mat imageResized, imageCropped;
 
 	// cout << imageSource.size() << endl;
-	resize(imageSource, imageResized, Size(), 0.5,0.5);
-	
-	Rect regionOfInterest(100,100,350,250);
+	resize(imageSource, imageResized, Size(), 0.5, 0.5);
+
+	Rect regionOfInterest(100, 100, 350, 250);
 	imageCropped = imageSource(regionOfInterest);
 
 	imshow("Image", imageSource);
 	imshow("Image Resized", imageResized);
 	imshow("Imaged Cropped", imageCropped);
-	
+
 	waitKey(0);
 }

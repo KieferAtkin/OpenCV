@@ -1,3 +1,1 @@
-﻿  ShapesAndText.cpp
-D:\IrisGuardProjects\OpenCV\OpenCVTest\ShapesAndText.cpp(13,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
-  OpenCVTest.vcxproj -> D:\IrisGuardProjects\OpenCV\OpenCVTest\x64\Debug\OpenCVTest.exe
+﻿  OpenCVTest.vcxproj -> D:\IrisGuardProjects\OpenCV\OpenCVTest\x64\Debug\OpenCVTest.exe
