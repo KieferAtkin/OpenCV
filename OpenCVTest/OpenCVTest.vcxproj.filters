@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ShapesAndText.cpp">
+    <ClCompile Include="HoughTransform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
