@@ -1,4 +1,2 @@
-﻿  HoughTransform.cpp
-D:\IrisGuardProjects\OpenCV\OpenCVTest\HoughTransform.cpp(11,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
-D:\IrisGuardProjects\OpenCV\OpenCVTest\HoughTransform.cpp(20,16): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'std::string'
-  OpenCVTest.vcxproj -> D:\IrisGuardProjects\OpenCV\OpenCVTest\x64\Debug\OpenCVTest.exe
+﻿  CannyEdgeDetector.cpp
+  OpenCVTest.vcxproj -> E:\VSProjects\OpenCV\OpenCVTest\x64\Debug\OpenCVTest.exe

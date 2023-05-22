@@ -1,1 +1,2 @@
 D:\IrisGuardProjects\OpenCV\OpenCVTest\x64\Debug\OpenCVTest.exe
+E:\VSProjects\OpenCV\OpenCVTest\x64\Debug\OpenCVTest.exe

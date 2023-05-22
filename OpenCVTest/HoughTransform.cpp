@@ -1,16 +1,29 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
+#include <iostream>
 
 using namespace cv;
 using namespace std;
 
+int inverseRatio = 1;
+int hough_Min_Threshold = 33;
+int hough_Max_Threshold = 180;
+int hough_Min_Distance = 16;
+int hough_min_Radius = 50;
+int hough_max_Radius = 150;
 
+int canny_LowThreshold = 0;
+const int canny_Max_lowThreshold = 100;
+const int cannyRatio = 3;
+const int canny_Kernel_Size = 3;
 
 void main()
 {
     //string imagePath = "Resources/EyeSignImages/Smarties.jpg";
-    string imagePath = "Resources/EyeSignImages/testImages1.bmp";
+    //string imagePath = "Resources/EyeSignImages/Name6.bmp";
+    string imagePath = "Resources/EyeSignImages/TestImages2.bmp";
+
     // Loads an image
     Mat imageSource = imread(imagePath, IMREAD_COLOR);
 
@@ -25,16 +38,21 @@ void main()
     cvtColor(imageSource, imageGray, COLOR_BGR2GRAY);
     medianBlur(imageGray, imageMedianBlur, 5);
     Canny(imageMedianBlur, imageCanny, 25, 75);
+   
 
     Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3));
     dilate(imageCanny, imageDilated, kernel);
 
-    vector<Vec3f> circles;
-    
-    HoughCircles(imageDilated, circles, HOUGH_GRADIENT, 1,
-        imageDilated.rows / 16,  // change this value to detect circles with different distances to each other
-        100, 30, 1, 30 // change the last two parameters
-        // (min_radius & max_radius) to detect larger circles
+    vector<Vec3f> circles;    
+    HoughCircles(imageDilated,                   // Input
+        circles,                                 // Output
+        HOUGH_GRADIENT,                          // Detection method
+        inverseRatio,                            // Inverse ratio of the accumulator resolution to the image resolution. 
+        imageDilated.rows / hough_Min_Distance,  // change this value to detect circles with different distances to each other
+        hough_Max_Threshold, 
+        hough_Min_Threshold,  
+        hough_min_Radius,  
+        hough_max_Radius
     );
 
     for (size_t i = 0; i < circles.size(); i++)
@@ -49,10 +67,10 @@ void main()
     }
 
     imshow("detected circles", imageSource);
-    imshow("image Gray", imageGray);
-    imshow("image median blur", imageMedianBlur);
+    //imshow("image Gray", imageGray);
+   // imshow("image median blur", imageMedianBlur);
     imshow("image Canny", imageCanny);
-    imshow("image Dilated", imageDilated);
+    //imshow("image Dilated", imageDilated);
 
     waitKey(0);
 
