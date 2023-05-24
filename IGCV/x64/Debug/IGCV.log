@@ -1,1 +1,3 @@
-﻿
+﻿  main.cpp
+D:\IrisGuardProjects\OpenCV\IGCV\main.cpp(8,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  IGCV.vcxproj -> D:\IrisGuardProjects\OpenCV\OpenCVTest\x64\Debug\IGCV.exe
