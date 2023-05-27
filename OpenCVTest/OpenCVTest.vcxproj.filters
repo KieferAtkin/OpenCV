@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Testing\DaugmanTest.cpp">
+    <ClCompile Include="Testing\HoughTransform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

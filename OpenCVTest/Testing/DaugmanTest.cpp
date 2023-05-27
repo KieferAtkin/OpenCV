@@ -6,43 +6,22 @@
 using namespace cv;
 using namespace std;
 
-
 Mat imageDetectedEdges;
 Mat imageGaussianBlur;
 Mat imageDilated;
 
-/******** Gaussian ************/
-int gaussianKernelFilterWidth = 3;
-int gaussianKernalFilterHeight = 3;
-double gaussianDeviationOnX = 2;
-double gaussianDeviationOnY = 2;
-
-/*********** Canny ************/
-int lowThreshold = 0;
-const int max_lowThreshold = 100;
-const double thresholdRatio = 2;
-const int kernel_size = 3; // the size of the Sobel kernel to be used internally
-
 /********** dilated **********/
 int dilationKernelColumn = 2;
 int dilationKernelRow = 2;
-
-/********** Hough ************/
-int inverseRatio = 1;
-int hough_Min_Distance_Of_Centers = 8;  // Minimum distance between detected centers.
-int hough_Min_Threshold = 100;          // Upper threshold for the internal Canny edge detector
-int hough_Max_Threshold = 30;           // Threshold for center detection
-int hough_min_Radius = 40;               // Minimum radius to be detected. If unknown, put zero as default.
-int hough_max_Radius = 150;              // Maximum radius to be detected. If unknown, put zero as default.
-
 
 static void LoadImageFromPath(Mat& imageSourceGray)
 {
     //string imagePath = "Resources/EyeSignImages/Smarties.jpg";
     //string imagePath = "Resources/EyeSignImages/Name6.bmp";
     string imagePath = "Resources/EyeSignImages/TestImages2.bmp";
+   
 
-    // Loads image and converts to grayscale.
+    // Loads image and converts.
     imageSourceGray = imread(imagePath, IMREAD_COLOR);
     if (imageSourceGray.empty())
     {
@@ -60,53 +39,65 @@ void main()
     cv::Mat imageSource;
     cv::Mat imageLoaded;
     LoadImageFromPath(imageLoaded);
-  
-        GaussianBlur(imageLoaded,
-            imageGaussianBlur,
-            Size(gaussianKernelFilterWidth, gaussianKernalFilterHeight),
-            gaussianDeviationOnX,
-            gaussianDeviationOnY,
-            BORDER_DEFAULT);
+    cvtColor(imageLoaded, imageLoaded, COLOR_BGR2GRAY);
 
-        Canny(imageGaussianBlur,
-            imageDetectedEdges,
-            lowThreshold,
-            lowThreshold * thresholdRatio,
-            kernel_size);
+   // imshow("imageLoaded Window", imageLoaded);
+   ///*
+   // /******** Gaussian ************/
+   // int gaussianKernelFilterWidth = 3;
+   // int gaussianKernalFilterHeight = 3;
+   // double gaussianDeviationOnX = 2;
+   // double gaussianDeviationOnY = 2;
 
-        Mat dilationKernel = getStructuringElement(MORPH_RECT, Size(dilationKernelColumn, dilationKernelRow));
-        dilate(imageDetectedEdges, imageDilated, dilationKernel);
+   // GaussianBlur(imageLoaded, 
+   //              imageGaussianBlur,
+   //              Size( gaussianKernelFilterWidth, 
+   //                    gaussianKernalFilterHeight),
+   //              gaussianDeviationOnX, 
+   //              gaussianDeviationOnY, 
+   //              BORDER_DEFAULT);
 
-       /* imshow("Dilated Image", imageLoaded);
-        imshow("Gaussian Image", imageGaussianBlur);
-        imshow("Detected Image", imageDetectedEdges);
-        imshow("Dilated Image", imageDilated);*/
+   // imshow("imageGaussianBlur Window", imageGaussianBlur);
 
-        //vector<Vec3f> circles;
-        //HoughCircles(imageDetectedEdges,                   // Input
-        //    circles,                                 // Output
-        //    HOUGH_GRADIENT,                          // Detection method
-        //    inverseRatio,                            // Inverse ratio of the accumulator resolution to the image resolution. 
-        //    imageDetectedEdges.rows / hough_Min_Distance,  // change this value to detect circles with different distances to each other
-        //    hough_Max_Threshold,
-        //    hough_Min_Threshold,
-        //    hough_min_Radius,
-        //    hough_max_Radius
-        //);
-          
+   // /*********** Canny ************/
+   // int threshold1 = 25; // 1st threshold for histeresis
+   // const double thresholdRatio = 3;
+   // //int threshold2 = threshold1 * thresholdRatio; // 2nd threshold for histeresis
+   // int threshold2 = 75;
+   // const int cannyKernel = 3; // the size of the Sobel kernel to be used internally
+
+   // Canny(imageGaussianBlur, imageDetectedEdges, threshold1, threshold2, cannyKernel);
+   // imshow("imageDetectedEdges Window", imageDetectedEdges);
+   //
+    Mat imageMedianBlur, imageDilated;
+    medianBlur(imageLoaded, imageMedianBlur, 5);
+    Canny(imageMedianBlur, imageDetectedEdges, 25, 75);
+
+    
+       
+    /********** Hough ************/
+    double inverseRatio = 1;
+    double min_dist = 16;  // Minimum distance between detected centers.
+    double param_1 = 33;          // Upper threshold for the internal Canny edge detector
+    double param_2 = 180;           // Threshold for center detection
+    int min_radius = 80;               // Minimum radius to be detected. If unknown, put zero as default.
+    int max_radius = 150;              // Maximum radius to be detected. If unknown, put zero as default.
         
     // Perform Hough Circle transform
     std::vector<Vec3f> circles;
     HoughCircles(imageDetectedEdges,
                  circles, 
                  HOUGH_GRADIENT, 
-                 1, 
+                 inverseRatio,
                  imageDetectedEdges.rows / 
-                 hough_Min_Distance_Of_Centers,
-                 hough_Max_Threshold, 
-                 hough_Min_Threshold, 
-                 hough_min_Radius, 
-                 hough_max_Radius);
+                 min_dist,
+                 param_1, 
+                 param_2,
+                 min_radius,
+                 max_radius);
+
+        std::cout << "Circle Size:" << "    " << circles.size() << "      " << "Px" << std::endl;
+
         
     // Iterate through detected circles
     for (size_t i = 0; i < circles.size(); i++)
@@ -115,12 +106,14 @@ void main()
         circle(imageLoaded, center, 1, Scalar(255, 255, 0), 2, LINE_AA);
 
         int radius = cvRound(circles[i][2]);
-
+        std::cout << "Circle radius:" << "    " << radius << "      " << "Px" << std::endl;
         // Draw the circle on the original image
         circle(imageLoaded, center, radius, Scalar(255, 100, 255), 2);
     }
     
-        imshow("Circles Detected", imageLoaded);
-        waitKey(0);
+    imshow("Detect Circles", imageDetectedEdges);
+    //imshow("imageDetectedEdges Window", imageDetectedEdges);
+    
+   waitKey(0);
 
 }

@@ -6,12 +6,31 @@
 using namespace cv;
 using namespace std;
 
-int inverseRatio = 1;
-int hough_Min_Threshold = 33;
-int hough_Max_Threshold = 180;
-int hough_Min_Distance = 16;
-int hough_min_Radius = 50;
-int hough_max_Radius = 150;
+/********** back up hough ********/
+//int inverseRatio = 1;
+//int hough_Min_Threshold = 33;
+//int hough_Max_Threshold = 180;
+//int hough_Min_Distance = 16;
+//int hough_min_Radius = 50;
+//int hough_max_Radius = 150;
+
+
+
+/* pupil boundry */
+double pupil_inverseRatio = 1.0;
+double pupil_param_1 = 30; // to do with Canny.
+double pupil_param_2 = 50; // accuracy : lower is less good
+double pupil_min_dist_div = 16; // For some reason the lower the number the better the result. Could result in false.
+int pupil_min_radius = 55;
+int pupil_max_radius = 165;
+
+/* iris boundry */
+double iris_inverseRatio = 1.0;
+double param_1 = 30; // to do with Canny.
+double param_2 = 50; // accuracy : lower is less good
+double iris_min_dist_div = 16; // For some reason the lower the number the better the result. Could result in false.
+int min_radius = 55;
+int max_radius = 180;
 
 int canny_LowThreshold = 0;
 const int canny_Max_lowThreshold = 100;
@@ -47,12 +66,12 @@ void main()
     HoughCircles(imageDilated,                   // Input
         circles,                                 // Output
         HOUGH_GRADIENT,                          // Detection method
-        inverseRatio,                            // Inverse ratio of the accumulator resolution to the image resolution. 
-        imageDilated.rows / hough_Min_Distance,  // change this value to detect circles with different distances to each other
-        hough_Max_Threshold, 
-        hough_Min_Threshold,  
-        hough_min_Radius,  
-        hough_max_Radius
+        pupil_inverseRatio,                            // Inverse ratio of the accumulator resolution to the image resolution. 
+        imageDilated.rows / pupil_min_dist_div,  // change this value to detect circles with different distances to each other
+        pupil_param_1,
+        pupil_param_2,
+        pupil_min_radius,  
+        pupil_max_radius
     );
 
     for (size_t i = 0; i < circles.size(); i++)
@@ -60,17 +79,39 @@ void main()
         Vec3i c = circles[i];
         Point center = Point(c[0], c[1]);
         // circle center
-        circle(imageSource, center, 1, Scalar(100, 0, 200), 2, LINE_AA);
+        circle(imageSource, center, 1, Scalar(0, 255, 255), 2, LINE_AA);
         // circle outline
         int radius = c[2];
-        circle(imageSource, center, radius, Scalar(0, 234, 255),2, LINE_AA); 
+        circle(imageSource, center, radius, Scalar(0, 255, 255),2, LINE_AA);
     }
 
+    vector<Vec3f> circles2;
+    HoughCircles(imageDilated,                   // Input
+        circles2,                                 // Output
+        HOUGH_GRADIENT,                          // Detection method
+        iris_inverseRatio,                            // Inverse ratio of the accumulator resolution to the image resolution. 
+        imageDilated.rows / iris_min_dist_div,  // change this value to detect circles with different distances to each other
+        param_1,
+        param_2,
+        min_radius,
+        max_radius
+    );
+
+    for (size_t i = 0; i < circles2.size(); i++)
+    {
+        Vec3i c = circles2[i];
+        Point center = Point(c[0], c[1]);
+        // circle center
+        circle(imageSource, center, 1, Scalar(0, 255, 255), 2, LINE_AA);
+        // circle outline
+        int radius = c[2];
+        circle(imageSource, center, radius, Scalar(0, 255, 255), 2, LINE_AA);
+    }
+    
+
     imshow("detected circles", imageSource);
-    //imshow("image Gray", imageGray);
-   // imshow("image median blur", imageMedianBlur);
     imshow("image Canny", imageCanny);
-    //imshow("image Dilated", imageDilated);
+ 
 
     waitKey(0);
 
