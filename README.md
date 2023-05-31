@@ -1,12 +1,12 @@
 # **OpenCV**
  
-# **IGCV**
+### **IGCV**
 
 - Name should most likley be changed to Application project.
 - Setup OpenGL, Glew, GLFW, GLM, DearImGUI etc. ( possibly Seperate dll base template? ).
 - 
 
-# **OpenCV Test**
+### **OpenCV Test**
 
 - Remove all unnecessary files etc.
 - Refactor code from main into reuseable functions.
