@@ -20,8 +20,8 @@ performing all testing and development until the requirements have been successf
 - [ ] Setup OpenGL with DearImGUI with additional libraries. (RealTime Rendering).
       Additional libraries would be Glew, GLFW, GLM etc.
 - [ ] CVUI.h library? 
-       - https://learnopencv.com/cvui-gui-lib-built-on-top-of-opencv-drawing-primitives/
-       - https://dovyski.github.io/cvui/
+-   https://learnopencv.com/cvui-gui-lib-built-on-top-of-opencv-drawing-primitives/ 
+-   https://dovyski.github.io/cvui/
 
 ### **OpenCV Test**
 
