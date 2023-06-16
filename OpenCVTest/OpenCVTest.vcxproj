@@ -19,7 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Testing\HoughTransform.cpp" />
+    <ClCompile Include="Testing\datetime_utils.cpp" />
+    <ClCompile Include="Testing\html_utils.cpp" />
+    <ClCompile Include="Testing\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Testing\datetime_utils.h" />
+    <ClInclude Include="Testing\html_utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCVTest", "OpenCVTest.vcxproj", "{97B91C09-BB2E-412D-8C8D-CE825F6AF9C0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IGCV", "..\IGCV\IGCV.vcxproj", "{1EF965FF-6C8D-4827-8F81-C58383001C63}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IGCVCore", "..\IGCV\IGCV.vcxproj", "{1EF965FF-6C8D-4827-8F81-C58383001C63}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UIApplication", "..\UIApplication\UIApplication.vcxproj", "{9BD62149-C4F0-4A7A-A526-7A067D6DF75A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{1EF965FF-6C8D-4827-8F81-C58383001C63}.Release|x64.Build.0 = Release|x64
 		{1EF965FF-6C8D-4827-8F81-C58383001C63}.Release|x86.ActiveCfg = Release|Win32
 		{1EF965FF-6C8D-4827-8F81-C58383001C63}.Release|x86.Build.0 = Release|Win32
+		{9BD62149-C4F0-4A7A-A526-7A067D6DF75A}.Debug|x64.ActiveCfg = Debug|x64
+		{9BD62149-C4F0-4A7A-A526-7A067D6DF75A}.Debug|x64.Build.0 = Debug|x64
+		{9BD62149-C4F0-4A7A-A526-7A067D6DF75A}.Debug|x86.ActiveCfg = Debug|Win32
+		{9BD62149-C4F0-4A7A-A526-7A067D6DF75A}.Debug|x86.Build.0 = Debug|Win32
+		{9BD62149-C4F0-4A7A-A526-7A067D6DF75A}.Release|x64.ActiveCfg = Release|x64
+		{9BD62149-C4F0-4A7A-A526-7A067D6DF75A}.Release|x64.Build.0 = Release|x64
+		{9BD62149-C4F0-4A7A-A526-7A067D6DF75A}.Release|x86.ActiveCfg = Release|Win32
+		{9BD62149-C4F0-4A7A-A526-7A067D6DF75A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
