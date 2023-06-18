@@ -3,6 +3,8 @@
 #include "opencv2/imgproc.hpp"
 #include <iostream>
 
+#include "MessageUtils.h"
+
 using namespace cv;
 using namespace std;
 
@@ -18,117 +20,56 @@ using namespace std;
 double pupil_inverseRatio = 1.0;
 double pupil_param_1 = 30; // to do with Canny.
 double pupil_param_2 = 50; // accuracy : lower is less good
-double pupil_min_dist_div = 16; // For some reason the lower the number the better the result. Could result in false.
-int pupil_min_radius = 55;
-int pupil_max_radius = 100;
+double pupil_min_dist_div = 8; // For some reason the lower the number the better the result. Could result in false.
+int pupil_min_radius = 50;
+int pupil_max_radius = 200;
 
 /* iris boundry */
 double iris_inverseRatio = 1.0;
 double param_1 = 30; // to do with Canny.
 double param_2 = 50; // accuracy : lower is less good
-double iris_min_dist_div = 16; // For some reason the lower the number the better the result. Could result in false.
-int min_radius = 55;
-int max_radius = 180;
+double iris_min_dist_div = 8; // For some reason the lower the number the better the result. Could result in false.
+int min_radius = 100;
+int max_radius = 300;
 
-int canny_LowThreshold = 0;
-const int canny_Max_lowThreshold = 100;
-const int cannyRatio = 3;
-const int canny_Kernel_Size = 3;
-
-cv::Size GetResolution(const cv::Mat& image) {
+cv::Size GetResolution(const cv::Mat& image)
+{
     int width = image.cols;
     int height = image.rows;
 
     return cv::Size(width, height);
 }
 
-static void LoadImageSource(cv::Mat& imageSource) {
+static void LoadImageSource(cv::Mat& imageSource)
+{
     std::string imagePath = "Resources/EyeSignImages/TestImages2.bmp";
 
     // Load image wether its colour or not.
     imageSource = cv::imread(imagePath, cv::IMREAD_COLOR);
     if (imageSource.empty()) {
 
-        std::cout << R"(
-********************************************
-                                
-  Could not open or find the image! )"
-        R"(
-                                
-********************************************
-    )" << std::endl;
+        PrintMessages::PrintImageLoadError();
         return;
     }
 
     cv::Size resolution = GetResolution(imageSource);
     int width = resolution.width;
     int height = resolution.height;
+    PrintMessages::PrintImageResolution(width, height);
 
-    
- std::cout << 
- R"(
- ******************************************
-                                 
-     Image resolution: )" << resolution.width << "px x " << resolution.height << "px" 
- R"(
-                                 
- ******************************************
- )" << std::endl;
-
-
-
- std::cout << R"(
- ***********************
-                                 
-     Image Loaded Successfully )"
-  R"(
-                                 
- ***********************
- )" << std::endl;
+    PrintMessages::PrintImageLoadSuccess();
 }
 
-
-void main()
+void detectAndDrawCircles(Mat& imgSource, Mat& imgDilated, float inverseRatio, int minDistDiv, int param1, int param2, int minRadius, int maxRadius, const string& circleType, const Scalar& circleColor)
 {
-    Mat imageGray, imageMedianBlur, imageCanny, imageDilated;
-
-    cv::Mat imageLoaded;
-    LoadImageSource(imageLoaded);
-
-    cv::Mat imageSource = imageLoaded;
-
-   
-    /*cvtColor(imageSource, imageGray, COLOR_BGR2GRAY);
-    medianBlur(imageGray, imageMedianBlur, 5);
-    Canny(imageMedianBlur, imageCanny, 25, 75);*/
-
-    cvtColor(imageSource, imageGray, COLOR_BGR2GRAY);
-    
-    GaussianBlur(imageGray,imageMedianBlur, Size(5,5), 0); 
-    Canny(imageMedianBlur, imageCanny, 25, 75);
-
-
-    Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3));
-    dilate(imageCanny, imageDilated, kernel);
-
-
-    /*
-     * C:(xcenter,ycenter,r)
-    */
-
     // Define a vector to store the detected circles
     vector<Vec3f> detectedCircles;
 
     // Detect circles using the Hough transform
-    HoughCircles(imageDilated,
-        detectedCircles,
-        HOUGH_GRADIENT,
-        pupil_inverseRatio,
-        imageDilated.rows / pupil_min_dist_div,
-        pupil_param_1,
-        pupil_param_2,
-        pupil_min_radius,
-        pupil_max_radius);
+    HoughCircles(imgDilated, detectedCircles, HOUGH_GRADIENT, inverseRatio, imgDilated.rows / minDistDiv, param1, param2, minRadius, maxRadius);
+
+    // Variable to store the number of detected circles
+    size_t numDetectedCircles = detectedCircles.size();
 
     // Iterate over each detected circle
     for (size_t circleIndex = 0; circleIndex < detectedCircles.size(); circleIndex++)
@@ -137,62 +78,94 @@ void main()
         Vec3i circleParams = detectedCircles[circleIndex];
         Point center = Point(circleParams[0], circleParams[1]); // [0] = Xcenter, [1] = Ycenter
 
-
         // Draw a small circle at the center of the current circle
-        // using a yellow color (BGR: 0, 255, 255) with a thickness of 2 pixels
-        circle(imageSource, center, 1, Scalar(0, 255, 255), 2, LINE_AA);
+        // using the specified color with a thickness of 2 pixels
+        circle(imgSource, center, 1, circleColor, 2, LINE_AA);
 
         // Extract the radius of the current circle
         int radius = circleParams[2]; // [2] = the radius.
 
-
         // Draw the outline of the current circle
-        // using the center, radius, yellow color (BGR: 0, 255, 255), and a thickness of 2 pixels
-        circle(imageSource, center, radius, Scalar(0, 255, 255), 2, LINE_AA);
+        // using the center, radius, and specified color with a thickness of 2 pixels
+        circle(imgSource, center, radius, circleColor, 2, LINE_AA);
 
-        std::cout << "*********************************** " << endl;
-        std::cout << "                                    " << endl;
-        std::cout << " Pupil Center: (" << center.x << ", " << center.y << ")" << " " << "Radius: (" << radius << "). " << std::endl;
-        std::cout << "                                    " << endl;
-        std::cout << "*********************************** " << endl;
+        PrintMessages::PrintCircleCoordinates(circleType, center.x, center.y, radius);
     }
 
+    // Print the number of detected circles
+    std::cout << "Number of " << circleType << " circles detected: " << numDetectedCircles << std::endl;
+}
 
-    vector<Vec3f> circles2;
-    HoughCircles(imageDilated,                    // Input
-        circles2,                                 // Output
-        HOUGH_GRADIENT,                           // Detection method
-        iris_inverseRatio,                        // Inverse ratio of the accumulator resolution to the image resolution. 
-        imageDilated.rows / iris_min_dist_div,    // change this value to detect circles with different distances to each other
-        param_1,
-        param_2,
-        min_radius,
-        max_radius
-    );
+cv::Mat calculateGradient(const cv::Mat& input)
+{
+    cv::Mat gradient;
 
-    for (size_t i = 0; i < circles2.size(); i++)
-    {
-        Vec3i c = circles2[i];
-        Point center = Point(c[0], c[1]);
-        // circle center
-        circle(imageSource, center, 1, Scalar(0, 255, 255), 2, LINE_AA);
-        // circle outline
-        int radius = c[2];
-        // circle(imageSource, center, radius, Scalar(0, 255, 255), 2, LINE_AA);
-        circle(imageSource, center, radius, Scalar(255,0, 255), 2, LINE_AA);
+    // Define the kernels for calculating gradient in the X and Y directions
+    cv::Mat kernelX = (cv::Mat_<float>(3, 3) << -1, 0, 1, -2, 0, 2, -1, 0, 1);
+    cv::Mat kernelY = (cv::Mat_<float>(3, 3) << -1, -2, -1, 0, 0, 0, 1, 2, 1);
 
-        std::cout << "*********************************** " << endl;
-        std::cout << "                                    " << endl;
-        std::cout << " Limbic Center: (" << center.x << ", " << center.y << ")" << " " << "Radius: (" << radius << "). " << std::endl;
-        std::cout << "                                    " << endl;
-        std::cout << "*********************************** " << endl;
-    }
+    // Apply the gradient kernels to the input image
+    cv::Mat gradX, gradY;
+    cv::filter2D(input, gradX, CV_32F, kernelX);
+    cv::filter2D(input, gradY, CV_32F, kernelY);
+
+    // Compute the magnitude of the gradient using the X and Y components
+    cv::magnitude(gradX, gradY, gradient);
+
+    return gradient;
+}
+
+cv::Mat imageProcessing(cv::Mat imgSource)
+{
+    cv::Mat imgGaussianBlur;
+    cv::Mat imgGradient;
+    cv::Mat imgCanny;
+
+    // Apply Gaussian blur to the grayscale image
+    cv::GaussianBlur(imgSource, imgGaussianBlur, cv::Size(5, 5), 1.4, 0);
+    imshow("Gaussian", imgGaussianBlur);
+
+    // Calculate gradient using the intensity gradient filter
+    imgGradient = calculateGradient(imgGaussianBlur);
+
+    // Convert the gradient image to 8-bit
+    imgGradient.convertTo(imgGradient, CV_8U);
+    imshow("Gradient", imgGradient);
+
+    // Perform Canny edge detection on the gradient image
+    cv::Canny(imgGaussianBlur, imgCanny, 0, 75, 3);
+    imshow("Canny", imgCanny);
+
+   return imgCanny;
+}
+
+void main()
+{
+    Mat imgLoaded, imgGray;
+
+    LoadImageSource(imgLoaded);
+    cv::Mat imgSource = imgLoaded;
+   
+    // Convert the source image to grayscale
+    cvtColor(imgSource, imgGray, COLOR_BGR2GRAY);
 
 
-    imshow("detected circles", imageSource);
-    imshow("image Canny", imageCanny);
+    // Call the imageProcessing function to process the image
+    cv::Mat processedImage = imageProcessing(imgGray);
+    
+    // Call the function for the "Pupil" circles
+    detectAndDrawCircles(imgSource, processedImage, pupil_inverseRatio,
+                         pupil_min_dist_div, pupil_param_1, pupil_param_2, 
+                         pupil_min_radius, pupil_max_radius, "Pupil", Scalar(0, 255, 255));
 
+    // Call the function for the "Limbic" circles
+    detectAndDrawCircles(imgSource, processedImage, iris_inverseRatio,
+                         iris_min_dist_div, param_1, param_2, 
+                         min_radius, max_radius, "Limbic", Scalar(255, 0, 255));
 
+    imshow("detected circles", imgSource);
+    
+    
     waitKey(0);
 
 }

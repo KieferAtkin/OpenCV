@@ -31,9 +31,9 @@ I --> J[End]
 ## Image Preprocessing
 <br/>
 
-- Resize the acquired image.
 - Denoise the image to remove noise and artifacts.
 - Enhance contrast and adjust illumination to improve image quality.
+- 
 
 ## Iris Segmentation
 <br/>

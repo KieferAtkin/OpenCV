@@ -22,10 +22,12 @@
     <ClCompile Include="Testing\datetime_utils.cpp" />
     <ClCompile Include="Testing\html_utils.cpp" />
     <ClCompile Include="Testing\main.cpp" />
+    <ClCompile Include="Testing\MessageUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Testing\datetime_utils.h" />
     <ClInclude Include="Testing\html_utils.h" />
+    <ClInclude Include="Testing\MessageUtils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
