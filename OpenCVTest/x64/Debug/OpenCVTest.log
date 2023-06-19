@@ -1,11 +1,11 @@
 ﻿  main.cpp
-E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(143,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
-E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(158,61): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(158,46): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(158,26): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(157,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(163,54): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(163,45): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(163,26): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(162,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(158,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(184,58): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(184,44): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(184,26): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(183,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(201,56): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(201,43): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(201,26): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+E:\VSProjects\OpenCV\OpenCVTest\Testing\main.cpp(200,54): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   OpenCVTest.vcxproj -> E:\VSProjects\OpenCV\OpenCVTest\x64\Debug\OpenCVTest.exe
