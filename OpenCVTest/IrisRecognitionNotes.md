@@ -2,9 +2,97 @@
 
 ## Scope
 
-The objective of this document is to descripe the steps of the new Iris Recognition system being developed by Kiefer Atkin @ IrisGuard UK LTD.
+This document is the main design document ofthe IGCVCore project.
+the objective of this project is to design a modern soltuion for the IrisGuards iris Capture Algorithm.
+OpenCV is the main library for this project and the code will be written in c++ using the Visual Studio 2022 IDE.
 
-There are four key steps before the Iris Matching stage can be attempted and they are: Image Aquisition, Iris Segmintation, normalisaition and Encoding.
+<br/>
+
+## General Approach of Iris Recognition
+----
+
+<br/>
+
+## Image Acquisition
+
+<br/>
+
+ - Acquire an image of the iris using a suitable imaging device.
+
+ - The Imaging Device used in the development of this project is an EyeTrust 2 by IrisGuard UK LTD.
+
+- the format used will be BitMap with a resolution of 640 x 480 pixels
+
+<br/>
+
+## Image Preprocessing
+
+<br/>
+
+- Convert the image to Grayscale. (even if already in Grayscale).
+
+- Denoise the image to remove noise and artifacts.
+
+- Enhance contrast and adjust illumination to improve image quality.
+
+- The Edge Detector that will be used will be Canny.
+
+<br/>
+
+## Iris Segmentation
+
+<br/>
+
+- Find the upper and lower EyeLid regions.
+
+- Find the Pupil boundry. - Using Hough Circle Transform.
+
+- Find the Limbic boundy of the iris. - Using Hough Circle Transform.
+
+<br/>
+
+## Normalization
+
+<br/>
+
+- Convert from cartesian to non-concentric polar representaion. "Rubber Sheet Unwrapping".
+
+- Apply techniques to remove geometric distortions and ensure consistency across different iris images.
+
+## Feature Extraction
+<br/>
+
+- Analyze the normalized iris image to extract distinctive features.
+
+- Using 2D Gabor Filters / 2D Gabor Wavelets.
+
+## Template Creation
+<br/>
+
+- The Normalised image is then applied to the filter to get the output.
+
+## Matching
+<br/>
+
+- Compare the generated iris template with stored templates or reference iris features.
+
+- Utilize matching algorithms like Hamming distance, correlation-based methods, or machine learning approaches to measure similarity.
+
+## Decision
+<br/>
+
+- Apply a threshold or decision rule to determine if the iris in the acquired image matches any stored template.
+
+- Make a decision based on the matching results to accept or reject the match.
+
+## End
+<br/>
+
+- Conclude the iris recognition process.
+
+<br/>
+
+------
 
 <br/>
 
@@ -23,55 +111,9 @@ I --> J[End]
 
 <br/>
 
-## Image Acquisition
+----------
+
 <br/>
 
- - Acquire an image of the iris using a suitable imaging device.
+#
 
-## Image Preprocessing
-<br/>
-
-- Denoise the image to remove noise and artifacts.
-- Enhance contrast and adjust illumination to improve image quality.
-- 
-
-## Iris Segmentation
-<br/>
-
-- Use techniques like circular Hough transform or active contour models to locate the boundaries of the iris region.
-- Extract the iris region from the rest of the image.
-
-## Normalization
-<br/>
-
-- Transform the segmented iris region into a standardized representation.
-- Apply techniques to remove geometric distortions and ensure consistency across different iris images.
-
-## Feature Extraction
-<br/>
-
-- Analyze the normalized iris image to extract distinctive features.
-- Use methods like Gabor filters, Daugman's rubber sheet model, or wavelet transforms to capture unique iris patterns and textures.
-
-## Template Creation
-<br/>
-
-- Create a template using the extracted iris features.
-- The template represents a compact representation of the iris, allowing for efficient storage and comparison.
-
-## Matching
-<br/>
-
-- Compare the generated iris template with stored templates or reference iris features.
-- Utilize matching algorithms like Hamming distance, correlation-based methods, or machine learning approaches to measure similarity.
-
-## Decision
-<br/>
-
-- Apply a threshold or decision rule to determine if the iris in the acquired image matches any stored template.
-- Make a decision based on the matching results to accept or reject the match.
-
-## End
-<br/>
-
-- Conclude the iris recognition process.

@@ -19,15 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Testing\datetime_utils.cpp" />
-    <ClCompile Include="Testing\html_utils.cpp" />
-    <ClCompile Include="Testing\main.cpp" />
-    <ClCompile Include="Testing\MessageUtils.cpp" />
+    <ClCompile Include="src\EyeDetector.cpp" />
+    <ClCompile Include="src\Processing.cpp" />
+    <ClCompile Include="utils\datetime_utils.cpp" />
+    <ClCompile Include="utils\image_utils.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="utils\MessageUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Testing\datetime_utils.h" />
-    <ClInclude Include="Testing\html_utils.h" />
-    <ClInclude Include="Testing\MessageUtils.h" />
+    <ClInclude Include="src\EyeDetector.h" />
+    <ClInclude Include="src\Processing.h" />
+    <ClInclude Include="utils\image_utils.h" />
+    <ClInclude Include="utils\datetime_utils.h" />
+    <ClInclude Include="utils\MessageUtils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -123,6 +127,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,6 +143,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
