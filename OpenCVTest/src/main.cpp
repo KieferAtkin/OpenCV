@@ -11,10 +11,12 @@
 using namespace cv;
 using namespace std;
 
+cv::Scalar Purple(255, 0, 255);
+
 
 void main (){
 // Read the image
-Mat image = imread("Resources/EyeSignImages/TestImages4.bmp");
+Mat image = imread("Resources/EyeSignImages/TestImages5.bmp");
 
 // Convert to grayscale
 Mat gray;
@@ -22,15 +24,19 @@ cvtColor(image, gray, COLOR_BGR2GRAY);
 
 // Apply Gaussian blur to reduce noise
 Mat blurred;
-GaussianBlur(gray, blurred, Size(7, 7), 0);
+GaussianBlur(gray, blurred, Size(5, 5), 0);
 
-// Apply Canny edge detection
+
+
+
+
+// Apply edge detection to detect eyelashes
 Mat edges;
-Canny(blurred, edges, 5, 45,3);
+Canny(blurred, edges, 25, 80);
 imshow("edgesEyelashes", edges);
 
-// Dilate the edges to connect nearby lashes
-int dilationSize = 2; // Adjust this size as needed
+// Dilate the edges to connect nearby features
+int dilationSize = 3; // Adjust this size as needed
 Mat dilatedEdges;
 dilate(edges, dilatedEdges, getStructuringElement(MORPH_RECT, Size(dilationSize, dilationSize)));
 
@@ -38,19 +44,38 @@ dilate(edges, dilatedEdges, getStructuringElement(MORPH_RECT, Size(dilationSize,
 std::vector<std::vector<Point>> contours;
 findContours(dilatedEdges, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 
-// Filter contours based on area or length to exclude noise
-std::vector<std::vector<Point>> filteredContours;
-double minContourLength = 10.0; // Adjust this length threshold as needed
-for (const auto& contour : contours) {
-    if (contourArea(contour) > minContourLength)
-        filteredContours.push_back(contour);
-}
 
 // Draw eyelash contours
-drawContours(image, filteredContours, -1, Scalar(255, 0, 255), FILLED);
+drawContours(image, contours, -1, Purple, 1);
+
+
+
+
+
+// Apply thresholding to segment the eyelids
+Mat thresholded;
+threshold(blurred, thresholded, 125, 255, THRESH_BINARY);
+
+// Find contours of the segmented regions
+std::vector<std::vector<Point>> eyelidContours;
+findContours(thresholded, eyelidContours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+
+// Filter contours based on area or length to exclude noise
+std::vector<std::vector<Point>> filteredEyelidContours;
+double minContourArea = 100.0; // Adjust this area threshold as needed
+for (const auto& contour : eyelidContours) {
+    if (contourArea(contour) > minContourArea)
+        filteredEyelidContours.push_back(contour);
+}
+
+// Draw eyelid contours
+drawContours(image, filteredEyelidContours, -1, Scalar(0, 255, 0), FILLED);
+
+
+
 
 // Display the result
-imshow("Eyelashes", image);
+imshow("Eyelashes and eyelids", image);
 waitKey(0);
 
 }

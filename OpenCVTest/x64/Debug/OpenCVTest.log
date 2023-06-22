@@ -1,1 +1,4 @@
-﻿  OpenCVTest.vcxproj -> D:\IrisGuardProjects\OpenCV\OpenCVTest\x64\Debug\OpenCVTest.exe
+﻿  main.cpp
+E:\VSProjects\OpenCV\OpenCVTest\src\Processing.h(13,105): warning C4042: 'stage': has bad storage class
+E:\VSProjects\OpenCV\OpenCVTest\src\main.cpp(17,13): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  OpenCVTest.vcxproj -> E:\VSProjects\OpenCV\OpenCVTest\x64\Debug\OpenCVTest.exe
