@@ -1,20 +1,25 @@
 #include "datetime_utils.h"
+#include <chrono>
 #include <ctime>
-#include <cstring>
+#include <sstream>
 
 std::string getGMTDateTime() {
-    std::time_t currentTime = std::time(nullptr);  // Get the current time as a time_t object
+    std::time_t currentTime = std::time(nullptr);
     std::tm gmtTime;
 
-    // Use gmtime_s() on Microsoft Visual C++ and MinGW compilers
-#if defined(_MSC_VER) || defined(__MINGW32__)
+#ifdef _MSC_VER
+    // For Microsoft Visual C++, use gmtime_s
     gmtime_s(&gmtTime, &currentTime);
 #else
-    // Use gmtime_r() as a fallback for other platforms
-    gmtime_r(&currentTime, &gmtTime);
+    // For other platforms, use gmtime_r
+    if (gmtime_r(&currentTime, &gmtTime) == nullptr) {
+        // Handle the case where gmtime_r returns nullptr (e.g., due to an error)
+        return "Error getting GMT time";
+    }
 #endif
 
-    char dateTimeStamp[100];  // Create a character array to store the formatted date and time string
-    std::strftime(dateTimeStamp, sizeof(dateTimeStamp), "%d-%m-%Y %H:%M:%S", &gmtTime);  // Format the GMT time struct into a string using strftime()
-    return std::string(dateTimeStamp);  // Convert the character array to a string and return it
+    std::stringstream dateTimeStream;
+    dateTimeStream << std::put_time(&gmtTime, "%d-%m-%Y %H:%M:%S");
+
+    return dateTimeStream.str();
 }

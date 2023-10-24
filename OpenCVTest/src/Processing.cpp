@@ -25,7 +25,7 @@ cv::Mat CalculateGradient(const cv::Mat& input)
 cv::Mat DilateImage(const cv::Mat& input, const std::string stage)
 {
     cv::Mat imgDilated;
-    cv::Mat structuringElement = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(2, 2));
+    cv::Mat structuringElement = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3,3));
 
     cv::dilate(input, imgDilated, structuringElement);
     imshow(stage + ": " + "Dilated", imgDilated);
@@ -34,7 +34,24 @@ cv::Mat DilateImage(const cv::Mat& input, const std::string stage)
 }
 
 cv::Mat ProcessImage(cv::Mat imgSource, cv::Size blurKernelSize, double blurSigmaX, double blurSigmaY,
-    int cannyThreshold1, int cannyThreshold2, int sobelApetureSize, bool dilate, const static std::string stage)
+    int cannyThreshold1, int cannyThreshold2, int sobelApetureSize, const static std::string stage)
+{
+    cv::Mat imgGaussianBlur;
+    cv::Mat imgCanny;
+
+    // Denoise
+    cv::GaussianBlur(imgSource, imgGaussianBlur, blurKernelSize, blurSigmaX, blurSigmaY);
+    // imshow( stage + ": " + "Gaussian", imgGaussianBlur);
+
+    // Perform Canny edge detection on the gradient image
+    cv::Canny(imgGaussianBlur, imgCanny, cannyThreshold1, cannyThreshold2, sobelApetureSize);
+    // imshow(stage + ": " + "Canny", imgCanny);
+
+    return imgCanny;
+}
+
+cv::Mat ProcessImageFilter(cv::Mat imgSource, cv::Size blurKernelSize, double blurSigmaX, double blurSigmaY,
+    int cannyThreshold1, int cannyThreshold2, int sobelApetureSize, const static std::string stage)
 {
     cv::Mat imgGaussianBlur;
     cv::Mat imgGradient;
@@ -54,12 +71,6 @@ cv::Mat ProcessImage(cv::Mat imgSource, cv::Size blurKernelSize, double blurSigm
     // Perform Canny edge detection on the gradient image
     cv::Canny(imgGaussianBlur, imgCanny, cannyThreshold1, cannyThreshold2, sobelApetureSize);
     // imshow(stage + ": " + "Canny", imgCanny);
-
-    // Perform dilation if the flag is set to true to the Canny Image.
-    if (dilate)
-    {
-        imgCanny = DilateImage(imgCanny, stage);
-    }
 
     return imgCanny;
 }
