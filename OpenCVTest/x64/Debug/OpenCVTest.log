@@ -1,13 +1,2 @@
-﻿  main28062023.cpp
-D:\IrisGuardProjects\OpenCV\OpenCVTest\src\Processing.h(13,92): warning C4042: 'stage': has bad storage class
-D:\IrisGuardProjects\OpenCV\OpenCVTest\src\Processing.h(16,92): warning C4042: 'stage': has bad storage class
-D:\IrisGuardProjects\OpenCV\OpenCVTest\src\main28062023.cpp(66,41): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-D:\IrisGuardProjects\OpenCV\OpenCVTest\src\main28062023.cpp(66,27): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-D:\IrisGuardProjects\OpenCV\OpenCVTest\src\main28062023.cpp(66,9): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-D:\IrisGuardProjects\OpenCV\OpenCVTest\src\main28062023.cpp(65,64): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\IrisGuardProjects\OpenCV\OpenCVTest\src\main28062023.cpp(81,39): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-D:\IrisGuardProjects\OpenCV\OpenCVTest\src\main28062023.cpp(81,26): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-D:\IrisGuardProjects\OpenCV\OpenCVTest\src\main28062023.cpp(81,9): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-D:\IrisGuardProjects\OpenCV\OpenCVTest\src\main28062023.cpp(80,65): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\IrisGuardProjects\OpenCV\OpenCVTest\src\main28062023.cpp(88,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+﻿  EyeDetectorImgHaar.cpp
   OpenCVTest.vcxproj -> D:\IrisGuardProjects\OpenCV\OpenCVTest\x64\Debug\OpenCVTest.exe

@@ -30,7 +30,7 @@
     <ClCompile Include="src\EyeDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\main28062023.cpp">
+    <ClCompile Include="Learning\EyeDetectorImgHaar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

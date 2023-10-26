@@ -16,7 +16,7 @@ void main() {
 	Mat imgSource = imread(path);
 	
 	CascadeClassifier faceCascade;
-	faceCascade.load("Resources/haarcascade_frontalface_default.xml");
+	faceCascade.load("Resources/haar-cascade-files/haarcascade_frontalface_default.xml");
 
 	if( faceCascade.empty() ) { cout << "XML file not found"<< endl; }
 

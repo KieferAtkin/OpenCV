@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Learning\EyeDetectorImgHaar.cpp" />
     <ClCompile Include="src\EyeDetector.cpp" />
-    <ClCompile Include="src\main28062023.cpp" />
     <ClCompile Include="src\Processing.cpp" />
     <ClCompile Include="utils\datetime_utils.cpp" />
     <ClCompile Include="utils\image_utils.cpp" />
