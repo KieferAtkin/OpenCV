@@ -19,19 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Learning\EyeDetectorImgHaar.cpp" />
-    <ClCompile Include="src\EyeDetector.cpp" />
-    <ClCompile Include="src\Processing.cpp" />
-    <ClCompile Include="utils\datetime_utils.cpp" />
-    <ClCompile Include="utils\image_utils.cpp" />
-    <ClCompile Include="utils\MessageUtils.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\EyeDetector.h" />
-    <ClInclude Include="src\Processing.h" />
-    <ClInclude Include="utils\image_utils.h" />
-    <ClInclude Include="utils\datetime_utils.h" />
-    <ClInclude Include="utils\MessageUtils.h" />
+    <ClCompile Include="Learning\CannyEdgeDetector.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

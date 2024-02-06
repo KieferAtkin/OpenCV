@@ -28,7 +28,7 @@ void main()
 	rectangle(imageBlank, Point(130, 226), Point(382, 286), Scalar(255, 255, 255),FILLED);
 	line(imageBlank, Point(130, 296), Point(382, 296), Scalar(255, 255, 255),2);
 
-	putText(imageBlank, "IrisGuard OpenCV", Point(137, 262), FONT_HERSHEY_DUPLEX, 0.75, Scalar(147, 144, 0), 1.5);
+	putText(imageBlank, "Kiefer OpenCV", Point(137, 262), FONT_HERSHEY_DUPLEX, 0.75, Scalar(147, 144, 0), 1.5);
 	
 
 	
